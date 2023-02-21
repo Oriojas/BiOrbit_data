@@ -9,6 +9,10 @@ packages = [{include = "biorbit_data"}]
 
 [tool.poetry.dependencies]
 python = "3.7.5"
+opencv-python = "^4.7.0.68"
+fastapi = "^0.92.0"
+uvicorn = "^0.20.0"
+numpy = "1.21"
 
 
 [build-system]
