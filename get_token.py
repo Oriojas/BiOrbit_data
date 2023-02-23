@@ -17,4 +17,4 @@ print(token)
 
 # All requests using this session will have an access token automatically added
 resp = oauth.get("https://services.sentinel-hub.com/oauth/tokeninfo")
-print(resp.content)
+#print(resp.content)

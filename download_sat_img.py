@@ -1,46 +1,54 @@
-import os
 import requests
 
-TOKEN = os.getenv("TOKEN")
 
-response = requests.post('https://services.sentinel-hub.com/api/v1/process',
-  headers={"Authorization": f"Bearer {TOKEN}"},
-  json={
-    "input": {
-        "bounds": {
-            "bbox": [
-                13.822174072265625,
-                45.85080395917834,
-                14.55963134765625,
-                46.29191774991382
-            ]
-        },
-        "data": [{
-            "type": "sentinel-2-l2a"
-        }]
-    },
-    "evalscript": """
-    //VERSION=3
+class downloadSatImg:
 
-    function setup() {
-      return {
-        input: ["B02", "B03", "B04"],
-        output: {
-          bands: 3
-        }
-      };
-    }
+    def __init__(self, coord: list, token: str):
+        self.coord = coord
+        self.token = token
 
-    function evaluatePixel(
-      sample,
-      scenes,
-      inputMetadata,
-      customData,
-      outputMetadata
-    ) {
-      return [2.5 * sample.B04, 2.5 * sample.B03, 2.5 * sample.B02];
-    }
-    """
-})
+    def img(self):
+        response = requests.post('https://services.sentinel-hub.com/api/v1/process',
+                                 headers={"Authorization": f"Bearer {self.token}"},
+                                 json={
+                                     "input": {
+                                         "bounds": {
+                                             "bbox": [
+                                                        self.coord[0],
+                                                        self.coord[1],
+                                                        self.coord[2],
+                                                        self.coord[3]
+                                                    ]
+                                         },
+                                         "data": [{
+                                             "type": "sentinel-2-l2a"
+                                         }]
+                                     },
+                                     "evalscript": """
+            //VERSION=3
+        
+            function setup() {
+              return {
+                input: ["B02", "B03", "B04"],
+                output: {
+                  bands: 3
+                }
+              };
+            }
+        
+            function evaluatePixel(
+              sample,
+              scenes,
+              inputMetadata,
+              customData,
+              outputMetadata
+            ) {
+              return [2.5 * sample.B04, 2.5 * sample.B03, 2.5 * sample.B02];
+            }
+            """
+         })
 
-print(response)
+        print(response)
+
+        return response.text
+
