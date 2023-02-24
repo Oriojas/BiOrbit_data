@@ -131,3 +131,5 @@ dmypy.json
 # Other types
 /poetry.lock
 .idea
+*.png
+*.kmz

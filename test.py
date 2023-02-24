@@ -12,7 +12,7 @@ box = [13.822174072265625, 45.85080395917834,
 
 raw_img = dsi.downloadSatImg(coord=box, token=TOKEN).img()
 
-sat_img = base64.decodebytes(b"{response.text}")
+sat_img = base64.decodebytes(b"{raw_img}")
 
 sat_img = np.asarray(sat_img)
 
