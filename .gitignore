@@ -133,3 +133,4 @@ dmypy.json
 .idea
 *.png
 *.kmz
+test_*.py
