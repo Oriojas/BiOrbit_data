@@ -135,3 +135,4 @@ dmypy.json
 *.kmz
 test_*.py
 *.pkl
+*.npz
