@@ -1,6 +1,5 @@
+import rasterio
 import numpy as np
-from PIL import Image
-
 
 class imgPrepare:
 
@@ -10,7 +9,8 @@ class imgPrepare:
         self.file_path = file_path
 
     def prepare(self):
-        org_img = Image.open(self.file_path)
+        with rasterio.open(f"{self.file_path}") as src:
+            org_img = src.read()
         raw_img = org_img.convert('L')
         array_img = np.asarray(raw_img.getdata(), dtype=np.float64).reshape((raw_img.size[1],
                                                                              raw_img.size[0]))
