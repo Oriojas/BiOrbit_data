@@ -5,6 +5,7 @@ import img_prepare as ipre
 import matplotlib.pyplot as plt
 from sklearn import linear_model
 from sklearn.metrics import r2_score
+from PIL import Image, ImageDraw, ImageFilter
 
 with open('/home/oscar/GitHub/BiOrbit_data/img_data/data.json', 'r') as f:
     data = json.load(f)
@@ -39,17 +40,17 @@ df_pred = pd.DataFrame.from_dict(dict_pre)
 
 df = pd.concat([df, df_pred])
 
-plt.plot(df["date"].iloc[0:-1], df["deforestation"].iloc[0:-1], "-o", label="deforestation")
-plt.plot(df["date"], df["pred"], "--", label="projection")
-plt.hlines(y=data["total_extension_protected_area"],
-           xmin=df["date"].min(), xmax=df["date"].max(),
-           label="total_area", color="green")
-
-plt.title(f"Deforestation: {data['protected_area_name']}, R2={round(r2_score(df['deforestation'], df['pred']), 2)}")
-plt.legend(loc='lower right')
-#plt.yscale("log")
-plt.grid()
-#plt.show()
+# plt.plot(df["date"].iloc[0:-1], df["deforestation"].iloc[0:-1], "-o", label="deforestation")
+# plt.plot(df["date"], df["pred"], "--", label="projection")
+# plt.hlines(y=data["total_extension_protected_area"],
+#            xmin=df["date"].min(), xmax=df["date"].max(),
+#            label="total_area", color="green")
+#
+# plt.title(f"Deforestation: {data['protected_area_name']}, R2={round(r2_score(df['deforestation'], df['pred']), 2)}")
+# plt.legend(loc='lower right')
+# # plt.yscale("log")
+# plt.grid()
+# plt.show()
 
 FILE = "/home/oscar/GitHub/BiOrbit_data/img_input/2023-03-14-LC09_B2_B3_B4_B5_multiband_NDVI_masked_added.TIF"
 
@@ -57,14 +58,24 @@ ipre_obj = ipre.imgPrepare(file_path=FILE)
 
 _, _, data = ipre_obj.prepare()
 
-plt.boxplot(df["deforestation"])
-plt.show()
+# plt.boxplot(df["deforestation"])
+# plt.show()
 
 rgb_image = ipre_obj.rgb()
 
 plt.imshow(data, cmap='hot', interpolation='nearest')
-plt.show()
+plt.axis("off")
+plt.savefig("/home/oscar/GitHub/BiOrbit_data/img_output/Deforestation.png",
+            bbox_inches='tight', pad_inches=0)
+# plt.show()
 
 plt.imshow(rgb_image)
-plt.show()
+plt.axis("off")
+plt.savefig("/home/oscar/GitHub/BiOrbit_data/img_output/RGB_image.png", bbox_inches='tight', pad_inches=0)
+# plt.show()
+
+im_rgb = Image.open('/home/oscar/GitHub/BiOrbit_data/img_output/Deforestation.png')
+im_rgba = im_rgb.copy()
+im_rgba.putalpha(30)
+im_rgba.save('/home/oscar/GitHub/BiOrbit_data/img_output/Deforestation_alpha.png')
 
