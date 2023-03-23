@@ -137,3 +137,4 @@ test_*.py
 *.pkl
 *.npz
 /img_input/forest_NDVI_mask_clipped.tif
+*.json

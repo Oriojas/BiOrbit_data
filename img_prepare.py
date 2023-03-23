@@ -2,18 +2,21 @@ import rasterio
 import numpy as np
 
 
-def create_rgb(chanel):
+def create_rgb(chanel, green=False, min_g=0):
     for i in range(chanel.shape[0]):
         for j in range(chanel.shape[1]):
             if np.isnan(chanel[i, j]):
                 chanel[i, j] = 1
 
-    chanel_norm = (255*(chanel - np.min(chanel))/np.ptp(chanel)).astype(int)
+    if not green:
+        chanel_norm = (255 * (chanel - np.min(chanel)) / np.ptp(chanel)).astype(int)
+    else:
+        chanel_norm = (255 * (chanel - min_g) / np.ptp(chanel)).astype(int)
 
     return chanel_norm
 
 
-class imgPrepare:
+class ImgPrepare:
 
     def __init__(self, file_path):
         self.file_path = file_path
@@ -29,11 +32,11 @@ class imgPrepare:
         for i in range(org_img.shape[1]):
             for j in range(org_img.shape[2]):
                 if np.isnan(deforestation[i, j]):
-                    deforestation[i, j] = 0.55
+                    deforestation[i, j] = 0.65
                 elif deforestation[i, j] > 1:
                     deforestation[i, j] = 1
                 elif deforestation[i, j] >= 0.7:
-                    forest_data[i, j] = 0.55
+                    forest_data[i, j] = 0.65
 
         area_pixels = deforestation.shape[0] * deforestation.shape[1]
         area_forest = forest_data.sum()
@@ -54,7 +57,7 @@ class imgPrepare:
             blue = src.read(3)
 
         red_norm = create_rgb(red)
-        green_norm = create_rgb(green)
+        green_norm = create_rgb(green, green=True, min_g=75)
         blue_norm = create_rgb(blue)
 
         rgb_img = np.dstack((blue_norm, green_norm, red_norm)).astype(np.uint8)

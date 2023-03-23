@@ -1,3 +1,4 @@
+import cv2
 import json
 import numpy as np
 import pandas as pd
@@ -5,7 +6,6 @@ import img_prepare as ipre
 import matplotlib.pyplot as plt
 from sklearn import linear_model
 from sklearn.metrics import r2_score
-from PIL import Image, ImageDraw, ImageFilter
 
 with open('/home/oscar/GitHub/BiOrbit_data/img_data/data.json', 'r') as f:
     data = json.load(f)
@@ -54,7 +54,7 @@ df = pd.concat([df, df_pred])
 
 FILE = "/home/oscar/GitHub/BiOrbit_data/img_input/2023-03-14-LC09_B2_B3_B4_B5_multiband_NDVI_masked_added.TIF"
 
-ipre_obj = ipre.imgPrepare(file_path=FILE)
+ipre_obj = ipre.ImgPrepare(file_path=FILE)
 
 _, _, data = ipre_obj.prepare()
 
@@ -71,11 +71,19 @@ plt.savefig("/home/oscar/GitHub/BiOrbit_data/img_output/Deforestation.png",
 
 plt.imshow(rgb_image)
 plt.axis("off")
-plt.savefig("/home/oscar/GitHub/BiOrbit_data/img_output/RGB_image.png", bbox_inches='tight', pad_inches=0)
+plt.savefig("/home/oscar/GitHub/BiOrbit_data/img_output/RGB_image.png",
+            bbox_inches='tight', pad_inches=0)
 # plt.show()
 
-im_rgb = Image.open('/home/oscar/GitHub/BiOrbit_data/img_output/Deforestation.png')
-im_rgba = im_rgb.copy()
-im_rgba.putalpha(30)
-im_rgba.save('/home/oscar/GitHub/BiOrbit_data/img_output/Deforestation_alpha.png')
+img_def = cv2.imread('/home/oscar/GitHub/BiOrbit_data/img_output/Deforestation.png',
+                     cv2.IMREAD_UNCHANGED)
+img_rgb = cv2.imread("/home/oscar/GitHub/BiOrbit_data/img_output/RGB_image.png",
+                     cv2.IMREAD_UNCHANGED)
+
+final_img = cv2.addWeighted(img_def, 0.2, img_rgb, 1, 0)
+
+cv2.imwrite('/home/oscar/GitHub/BiOrbit_data/img_output/final_img.png', final_img)
+cv2.imshow('final_img', final_img)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
 
