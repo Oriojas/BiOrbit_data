@@ -1,0 +1,30 @@
+{
+  "protected_area_name": {
+    "type": "str",
+    "mandatory": true
+  },
+  "photo": {
+    "type": "string",
+    "mandatory": true
+  },
+  "description": {
+    "type": "string",
+    "mandatory": false
+  },
+  "footprint": {
+    "type": "array",
+    "mandatory": true
+  },
+  "last_detection_date": {
+    "type": "date",
+    "mandatory": true
+  },
+  "total_extension_protected_area": {
+    "type": "float",
+    "mandatory": true
+  },
+  "total_extension_forest_cover": {
+    "type": "float",
+    "mandatory": true
+  }
+}
