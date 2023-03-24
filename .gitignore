@@ -138,3 +138,4 @@ test_*.py
 *.npz
 /img_input/forest_NDVI_mask_clipped.tif
 *.json
+/co2-storage/
