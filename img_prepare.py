@@ -3,6 +3,13 @@ import numpy as np
 
 
 def create_rgb(chanel, green=False, min_g=0):
+    """
+    This function create rgb image and highlights some chanels
+    :param chanel: array chanel
+    :param green: if highlights some chanel
+    :param min_g: if highlights some chanel
+    :return: processed chanel
+    """
     for i in range(chanel.shape[0]):
         for j in range(chanel.shape[1]):
             if np.isnan(chanel[i, j]):
@@ -19,9 +26,17 @@ def create_rgb(chanel, green=False, min_g=0):
 class ImgPrepare:
 
     def __init__(self, file_path):
+        """
+        this function prepare image to send IPFS
+        :param file_path: path to image process
+        """
         self.file_path = file_path
 
     def prepare(self):
+        """
+        this function read TIF file and extract NDVI chanel, clouds and basic statistic
+        :return: NDV image
+        """
         with rasterio.open(f"{self.file_path}") as src:
             org_img = src.read()
 
@@ -51,6 +66,10 @@ class ImgPrepare:
         return resume, hist_data, deforestation
 
     def rgb(self):
+        """
+        this function create normal image
+        :return: RGB image
+        """
         with rasterio.open(f"{self.file_path}") as src:
             red = src.read(1)
             green = src.read(2)
