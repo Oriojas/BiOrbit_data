@@ -9,7 +9,11 @@ FOLDER_JSON = os.environ["FOLDER_JSON"]
 
 class PostIpfs:
 
-    def __init__(self, file_name):
+    def __init__(self, file_name: str):
+        """
+        init class
+        :param file_name: path file to send
+        """
 
         self.file_name = file_name
         self.url = "https://api.estuary.tech/content/add"
@@ -17,6 +21,10 @@ class PostIpfs:
         self.con = '"Content-Type: multipart/form-data"'
 
     def send_img(self):
+        """
+        This function send img to IPFS Stuary IPFS
+        :return:
+        """
 
         dat = f'"data=@{FOLDER_DATA}/{self.file_name}.png"'
 
@@ -42,6 +50,11 @@ class PostIpfs:
         return cid, ret_url
 
     def send_met(self, data):
+        """
+        This function send metadata to IPFS
+        :param data:
+        :return:
+        """
 
         dat = f'"data=@{FOLDER_JSON}/{data}"'
 
