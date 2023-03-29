@@ -11,11 +11,24 @@ from sklearn.metrics import r2_score
 class DataProcess:
 
     def __init__(self, file_meta: str, ndvi_tif: str):
+        """
+        this class make a regression and process data
+        :param file_meta: json from frontend
+        :param ndvi_tif: image with NDVI data
+        """
 
         self.file_meta = file_meta
         self.ndvi_tif = ndvi_tif
 
     def process_meta(self, reg_date: str, view_plot: bool = False, log: bool = False, plot_name: str = "plot_tend"):
+        """
+        this function process metadata
+        :param reg_date: date to predict example "2023-05-30"
+        :param view_plot: if view plot in docker false
+        :param log: if view log scale in plot
+        :param plot_name: name plot
+        :return: None
+        """
 
         with open(self.file_meta, 'r') as f:
             m_data = json.load(f)
@@ -67,6 +80,11 @@ class DataProcess:
         print("Regression OK")
 
     def process_ndvi_tif(self, view_plot: bool = False):
+        """
+        tihs function process img
+        :param view_plot: if view plot in docker false
+        :return:
+        """
 
         ipre_obj = ipre.ImgPrepare(file_path=self.ndvi_tif)
         _, _, data = ipre_obj.prepare()

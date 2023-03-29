@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 
 FILE = "/home/oscar/GitHub/BiOrbit_data/img_input/2023-03-14-LC09_B2_B3_B4_B5_multiband_NDVI_masked_added.TIF"
 
-resume, hist, data = ipre.ImgPrepare(file_path=FILE).prepare
+resume, hist, data = ipre.ImgPrepare(file_path=FILE).prepare()
 
 print(resume)
 
