@@ -136,3 +136,4 @@ dmypy.json
 *.pkl
 *.npz
 /img_input/forest_NDVI_mask_clipped.tif
+/temp_files/obj.pickle
