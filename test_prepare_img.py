@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 #                            [-68.932746, 3.622349],
 #                            [-68.932746, 2.114557]]]}
 
-FILE = "/home/oscar/GitHub/BiOrbit_data/img_input/2023-03-14-LC09_B2_B3_B4_B5_multiband_NDVI_masked_added.TIF"
+FILE = "/img_input/2023-03-14-LC09_B2_B3_B4_B5_multiband_NDVI_masked_added.TIF"
 
 resume, hist, data = ipre.ImgPrepare(file_path=FILE).prepare()
 
