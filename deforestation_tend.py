@@ -70,12 +70,12 @@ class DataProcess:
         plt.grid()
         if view_plot:
             plt.show()
-        plt.savefig(f"/home/oscar/GitHub/BiOrbit_data/plots/{plot_name}_boxp.png")
+        plt.savefig(f"plots/{plot_name}_boxp.png")
 
         plt.boxplot(df_meta["deforestation"])
         if view_plot:
             plt.show()
-        plt.savefig(f"/home/oscar/GitHub/BiOrbit_data/plots/{plot_name}_reg.png")
+        plt.savefig(f"plots/{plot_name}_reg.png")
 
         print("Regression OK")
 
@@ -90,28 +90,28 @@ class DataProcess:
         _, _, data = ipre_obj.prepare()
 
         rgb_image = ipre_obj.rgb()
-        plt.imshow(data, cmap='hot', interpolation='nearest')
+        #plt.imshow(data, cmap='hot', interpolation='nearest')
         plt.axis("off")
-        plt.savefig("/home/oscar/GitHub/BiOrbit_data/img_output/Deforestation.png",
+        plt.savefig("img_output/Deforestation.png",
                     bbox_inches='tight', pad_inches=0)
         if view_plot:
             plt.show()
 
-        plt.imshow(rgb_image)
+        #plt.imshow(rgb_image)
         plt.axis("off")
-        plt.savefig("/home/oscar/GitHub/BiOrbit_data/img_output/RGB_image.png",
+        plt.savefig("img_output/RGB_image.png",
                     bbox_inches='tight', pad_inches=0)
         if view_plot:
             plt.show()
 
-        img_def = cv2.imread('/home/oscar/GitHub/BiOrbit_data/img_output/Deforestation.png',
+        img_def = cv2.imread('img_output/Deforestation.png',
                              cv2.IMREAD_UNCHANGED)
-        img_rgb = cv2.imread("/home/oscar/GitHub/BiOrbit_data/img_output/RGB_image.png",
+        img_rgb = cv2.imread("img_output/RGB_image.png",
                              cv2.IMREAD_UNCHANGED)
 
         final_img = cv2.addWeighted(img_def, 0.2, img_rgb, 1, 0)
 
-        cv2.imwrite('/home/oscar/GitHub/BiOrbit_data/img_output/final_img.png',
+        cv2.imwrite('img_output/final_img.png',
                     final_img)
 
         if view_plot:
