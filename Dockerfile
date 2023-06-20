@@ -1,4 +1,4 @@
-FROM --platform=linux/x86_64 python:3.7.5
+FROM python:3.7.5
 # Update the system
 RUN apt-get update && apt-get upgrade -y && apt-get install nodejs npm -y
 # Copy get-poetry.py
